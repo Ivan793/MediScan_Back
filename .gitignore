@@ -1,0 +1,37 @@
+# Entorno virtual
+venv/
+env/
+.venv/
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Distribución y empaquetado
+build/
+dist/
+*.egg-info/
+
+# Configuración local / credenciales
+.env
+config.json
+
+# Logs
+*.log
+logs/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Otros archivos temporales
+*.swp
+
+# Firebase / Firestore API key
+firebase_key.json
