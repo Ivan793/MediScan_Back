@@ -17,6 +17,7 @@ class UsuarioBase(BaseModel):
     genero: Optional[str] = None
     foto_perfil: Optional[str] = None
     fecha_registro: datetime = Field(default_factory=datetime.utcnow)
+    rol: str = Field(default="publico", description="Rol del usuario en el sistema (admin, empresa, doctor, etc.)")
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -33,7 +34,8 @@ class UsuarioBase(BaseModel):
                 "fecha_nacimiento": "1990-05-10T00:00:00",
                 "genero": "Masculino",
                 "foto_perfil": "https://ejemplo.com/perfil.jpg",
-                "fecha_registro": "2025-10-24T12:00:00"
+                "fecha_registro": "2025-10-24T12:00:00",
+                "rol": "empresa"
             }
         }
     )
@@ -62,6 +64,7 @@ class UsuarioActualizar(BaseModel):
     foto_perfil: Optional[str] = None
     contraseña: Optional[str] = None
     activo: Optional[bool] = None
+    rol: Optional[str] = None
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -71,7 +74,8 @@ class UsuarioActualizar(BaseModel):
                 "ciudad": "Medellín",
                 "pais": "Colombia",
                 "foto_perfil": "https://ejemplo.com/nueva_foto.jpg",
-                "activo": True
+                "activo": True,
+                "rol": "doctor"
             }
         }
     )

@@ -22,7 +22,6 @@ config.json
 logs/
 
 # IDEs y editores
-.vscode/
 .idea/
 *.sublime-workspace
 
@@ -35,3 +34,7 @@ Thumbs.db
 
 # Firebase / Firestore API key
 firebase_key.json
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
