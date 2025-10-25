@@ -36,6 +36,7 @@ class EmpresaBase(BaseModel):
                 "pais": "Colombia",
                 "telefono": "+5741234567",
                 "correo_contacto": "contacto@vidaplena.com",
+                "contraseña": "Usuario123#",
                 "regimen": "Contributivo",
                 "ips": "IPS Vida Plena",
                 "servicios": ["Medicina general", "Odontología"],
@@ -47,7 +48,7 @@ class EmpresaBase(BaseModel):
 
 
 class EmpresaCrear(EmpresaBase):
-    usuario: UsuarioCrear  # Empresa con su usuario asociado
+    usuario: UsuarioCrear
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -58,12 +59,14 @@ class EmpresaCrear(EmpresaBase):
                     "nombres": "Clínica Vida Plena",
                     "apellidos": "",
                     "correo": "contacto@vidaplena.com",
+                    "contraseña": "Usuario123#",
                     "telefono": "+5741234567",
                     "direccion": "Calle 12 #45-67",
                     "ciudad": "Medellín",
                     "pais": "Colombia",
                     "fecha_nacimiento": "2000-01-01",
-                    "genero": "Otro"
+                    "genero": "Otro",
+                    "rol": "empresa"
                 },
                 "nit": "900123456-1",
                 "razon_social": "Clínica Vida Plena S.A.",
@@ -83,6 +86,7 @@ class EmpresaCrear(EmpresaBase):
     )
 
 
+
 class EmpresaActualizar(BaseModel):
     razon_social: Optional[str] = None
     licencia_funcionamiento: Optional[str] = None
@@ -93,6 +97,7 @@ class EmpresaActualizar(BaseModel):
     pais: Optional[str] = None
     telefono: Optional[str] = None
     correo_contacto: Optional[EmailStr] = None
+    contraseña:Optional[str] = None
     regimen: Optional[str] = None
     ips: Optional[str] = None
     servicios: Optional[List[str]] = None
