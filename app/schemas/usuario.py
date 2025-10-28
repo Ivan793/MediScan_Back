@@ -4,20 +4,13 @@ from datetime import datetime
 
 
 class UsuarioBase(BaseModel):
-    nombres: str
-    apellidos: str
-    tipo_documento: str
-    numero_documento: str
     correo: EmailStr
-    telefono: Optional[str] = None
-    direccion: Optional[str] = None
-    ciudad: Optional[str] = None
-    pais: Optional[str] = None
-    fecha_nacimiento: Optional[datetime] = None
-    genero: Optional[str] = None
-    foto_perfil: Optional[str] = None
-    fecha_registro: datetime = Field(default_factory=datetime.utcnow)
-    rol: str = Field(default="publico", description="Rol del usuario en el sistema (admin, empresa, doctor, etc.)")
+    contrasenia_hash: str
+    activo: bool = True
+    foto_perfil_url: Optional[str] = None
+    fecha_creacion: datetime = Field(default_factory=datetime.utcnow)
+    fecha_ultima_actualizacion: datetime = Field(default_factory=datetime.utcnow)
+    rol_id: str
 
     model_config = ConfigDict(
         json_schema_extra={

@@ -5,8 +5,7 @@ from datetime import datetime
 from app.schemas.usuario import UsuarioCrear
 
 
-# 🔹 Base general para todos los doctores
-class DoctorBase(BaseModel):
+class DoctorBase(PersonaBase):
     rethus: str
     numero_tarjeta_profesional: str
     especialidades: List[str]
@@ -15,7 +14,7 @@ class DoctorBase(BaseModel):
     archivo_titulo_grado: Optional[str] = None
     archivo_rethus: Optional[str] = None
     archivo_especialidad: Optional[str] = None
-    activo: bool = True
+    usuario_id: str
     id_empresa: Optional[str] = None  # ← Solo se llena si pertenece a una empresa
 
     model_config = ConfigDict(

@@ -3,11 +3,10 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime, date
 
-class PacienteBase(BaseModel):
-    nombre: str
-    identificacion: str
-    fecha_nacimiento: date
-    activo: bool = True
+class PacienteBase(PersonaBase):
+    tipo_sangre: TipoSangreEnum
+    profesion: Optional[str]
+    estado_civil: EstadoCivilEnum
 
 class PacienteCreate(PacienteBase):
     pass
