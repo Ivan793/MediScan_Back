@@ -17,7 +17,7 @@ class EmpresaBase(BaseModel):
     correo_contacto: EmailStr
     regimen: Optional[str] = None
     ips: Optional[str] = None
-    rol_id: str
+    id_usuario: str
     servicios: Optional[List[str]] = Field(default_factory=list)
     sedes: Optional[List[str]] = Field(default_factory=list)
     estado: Literal["pendiente", "aprobada", "rechazada"] = Field(default="pendiente")

@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional, List
 from datetime import datetime
+from app.schemas.persona import PersonaBase
+
 
 from app.schemas.usuario import UsuarioCrear
 
@@ -14,7 +16,7 @@ class DoctorBase(PersonaBase):
     archivo_titulo_grado: Optional[str] = None
     archivo_rethus: Optional[str] = None
     archivo_especialidad: Optional[str] = None
-    usuario_id: str
+    id_usuario: str
     id_empresa: Optional[str] = None  # ← Solo se llena si pertenece a una empresa
 
     model_config = ConfigDict(

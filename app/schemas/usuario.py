@@ -10,7 +10,7 @@ class UsuarioBase(BaseModel):
     foto_perfil_url: Optional[str] = None
     fecha_creacion: datetime = Field(default_factory=datetime.utcnow)
     fecha_ultima_actualizacion: datetime = Field(default_factory=datetime.utcnow)
-    rol_id: str
+    id_rol: str
 
     model_config = ConfigDict(
         json_schema_extra={

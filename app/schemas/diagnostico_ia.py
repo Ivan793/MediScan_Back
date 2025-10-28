@@ -1,24 +1,32 @@
-# app/schemas/diagnostico_ia.py
+# app/schemas/diagnostico_radiologico.py
 from pydantic import BaseModel, Field
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
-class DiagnosticoIABase(BaseModel):
+class DiagnosticoRadiologicoBase(BaseModel):
     id_radiografia: str
-    resultado: str
-    confianza: float = Field(..., ge=0, le=1)
+    id_doctor: str
+    fecha_diagnostico: datetime = Field(default_factory=datetime.utcnow)
+    hallazgos: Optional[str] = None
+    impresion_diagnostica: Optional[str] = None
+    recomendaciones: Optional[str] = None
+    porcentaje_confianza: Optional[float] = None
 
-class DiagnosticoIACreate(DiagnosticoIABase):
+class DiagnosticoRadiologicoCreate(DiagnosticoRadiologicoBase):
     pass
 
-class DiagnosticoIAUpdate(BaseModel):
-    resultado: Optional[str] = None
-    confianza: Optional[float] = None
+class DiagnosticoRadiologicoUpdate(BaseModel):
+    hallazgos: Optional[str] = None
+    impresion_diagnostica: Optional[str] = None
+    recomendaciones: Optional[str] = None
+    nivel_confianza: Optional[float] = None
+    firmado_por_medico: Optional[bool] = None
+    activo: Optional[bool] = None
 
-class DiagnosticoIAResponse(DiagnosticoIABase):
+class DiagnosticoRadiologicoResponse(DiagnosticoRadiologicoBase):
     id_diagnostico: str
-    created_at: datetime
-    updated_at: datetime
+    creado_en: datetime = Field(default_factory=datetime.utcnow)
+    actualizado_en: datetime = Field(default_factory=datetime.utcnow)
 
     class Config:
         from_attributes = True

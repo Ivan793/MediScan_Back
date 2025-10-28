@@ -2,7 +2,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, ConfigDict
-
+from app.schemas.enums.tipo_documento import TipoDocumentoEnum
+from app.schemas.enums.genero import GeneroEnum  
 
 class PersonaBase(BaseModel):
     nombres: str
