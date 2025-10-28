@@ -15,60 +15,51 @@ class UsuarioBase(BaseModel):
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "nombres": "Juan Carlos",
-                "apellidos": "Martínez López",
-                "tipo_documento": "CC",
-                "numero_documento": "1023456789",
                 "correo": "juan.martinez@ejemplo.com",
-                "telefono": "+57 3001234567",
-                "direccion": "Calle 12 #34-56, Bogotá",
-                "ciudad": "Bogotá",
-                "pais": "Colombia",
-                "fecha_nacimiento": "1990-05-10T00:00:00",
-                "genero": "Masculino",
-                "foto_perfil": "https://ejemplo.com/perfil.jpg",
-                "fecha_registro": "2025-10-24T12:00:00",
-                "rol": "empresa"
+                "contrasenia_hash": "hash_de_contraseña_123",
+                "activo": True,
+                "foto_perfil_url": "https://ejemplo.com/perfil.jpg",
+                "fecha_creacion": "2025-10-24T12:00:00",
+                "fecha_ultima_actualizacion": "2025-10-24T12:00:00",
+                "id_rol": "empresa"
             }
         }
     )
 
 
-class UsuarioCrear(UsuarioBase):
-    contraseña: str
+class UsuarioCrear(BaseModel):
+    correo: EmailStr
+    contrasenia: str
+    id_rol: str
+    foto_perfil_url: Optional[str] = None
 
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                **UsuarioBase.model_config["json_schema_extra"]["example"],
-                "contraseña": "Usuario123#"
+                "correo": "maria.lopez@ejemplo.com",
+                "contrasenia": "Usuario123#",
+                "id_rol": "paciente",
+                "foto_perfil_url": "https://ejemplo.com/foto.jpg"
             }
         }
     )
 
 
 class UsuarioActualizar(BaseModel):
-    nombres: Optional[str] = None
-    apellidos: Optional[str] = None
-    telefono: Optional[str] = None
-    direccion: Optional[str] = None
-    ciudad: Optional[str] = None
-    pais: Optional[str] = None
-    foto_perfil: Optional[str] = None
-    contraseña: Optional[str] = None
+    correo: Optional[EmailStr] = None
+    contrasenia: Optional[str] = None
+    foto_perfil_url: Optional[str] = None
     activo: Optional[bool] = None
-    rol: Optional[str] = None
+    id_rol: Optional[str] = None
 
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "telefono": "+57 3112223344",
-                "direccion": "Carrera 15 #45-10",
-                "ciudad": "Medellín",
-                "pais": "Colombia",
-                "foto_perfil": "https://ejemplo.com/nueva_foto.jpg",
-                "activo": True,
-                "rol": "doctor"
+                "correo": "nuevo.correo@ejemplo.com",
+                "contrasenia": "NuevaContraseña123!",
+                "foto_perfil_url": "https://ejemplo.com/nueva_foto.jpg",
+                "activo": False,
+                "id_rol": "doctor"
             }
         }
     )
@@ -76,6 +67,19 @@ class UsuarioActualizar(BaseModel):
 
 class UsuarioRespuesta(UsuarioBase):
     id: str
-    activo: bool = True
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "example": {
+                "id": "usr_123456",
+                "correo": "juan.martinez@ejemplo.com",
+                "contrasenia_hash": "hash_de_contraseña_123",
+                "activo": True,
+                "foto_perfil_url": "https://ejemplo.com/perfil.jpg",
+                "fecha_creacion": "2025-10-24T12:00:00",
+                "fecha_ultima_actualizacion": "2025-10-24T12:00:00",
+                "id_rol": "empresa"
+            }
+        }
+    )

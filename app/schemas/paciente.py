@@ -3,6 +3,10 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime, date
 
+from app.schemas.enums.estado_civil import EstadoCivilEnum
+from app.schemas.enums.tipo_sangre import TipoSangreEnum
+from app.schemas.persona import PersonaBase
+
 class PacienteBase(PersonaBase):
     tipo_sangre: TipoSangreEnum
     profesion: Optional[str]
