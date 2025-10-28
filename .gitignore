@@ -35,3 +35,5 @@ Thumbs.db
 
 # Firebase / Firestore API key
 firebase_key.json
+/app/firebase_key.json
+firebase_key.json
