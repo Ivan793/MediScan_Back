@@ -17,7 +17,7 @@ class DoctorBase(PersonaBase):
     archivo_rethus: Optional[str] = None
     archivo_especialidad: Optional[str] = None
     id_usuario: str
-    id_empresa: Optional[str] = None  # ← Solo se llena si pertenece a una empresa
+    id_empresa: Optional[str] = None 
 
     model_config = ConfigDict(
         json_schema_extra={
