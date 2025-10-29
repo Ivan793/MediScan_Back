@@ -1,17 +1,15 @@
 from fastapi import APIRouter, Depends, Request, HTTPException
-from firebase_admin import auth as firebase_auth
+from firebase_admin import auth
+from pydantic import BaseModel
+from app.types.login_request import LoginRequest
 from app.services.auth_service import AuthServicio
+from app.decorators.role_required import role_required
 
 router = APIRouter(prefix="/auth", tags=["Autenticación"])
 servicio = AuthServicio()
 
 
-from pydantic import BaseModel
-from firebase_admin import auth
 
-class LoginRequest(BaseModel):
-    email: str
-    password: str
 
 @router.post("/login")
 def login(data: LoginRequest):
@@ -30,16 +28,16 @@ def login(data: LoginRequest):
         raise HTTPException(status_code=401, detail=f"Error en login: {e}")
 
 
+
 @router.get("/me")
 def get_me(current_user=Depends(servicio.get_current_user)):
     return {
-        "uid": current_user["uid"],
-        "email": current_user.get("email"),
-        "role": current_user.get("role")
+        "message": "Usuario autenticado correctamente",
+        "user": current_user
     }
 
 
 @router.post("/assign-role")
-@servicio.role_required(["superadmin"])
+@role_required(["superadmin"])
 async def assign_role_route(request: Request, uid: str, role: str, current_user=None):
     return servicio.assign_role(uid, role)

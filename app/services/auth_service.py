@@ -1,7 +1,5 @@
-from fastapi import HTTPException, status, Header, Request
+from fastapi import Header, HTTPException
 from firebase_admin import auth as firebase_auth, exceptions
-from functools import wraps
-
 
 class AuthServicio:
 
@@ -13,38 +11,22 @@ class AuthServicio:
         try:
             token = authorization.split(" ")[1]
             decoded_token = firebase_auth.verify_id_token(token)
-            return decoded_token
+            uid = decoded_token.get("uid")
+
+            user = firebase_auth.get_user(uid)
+
+            return {
+                "uid": user.uid,
+                "email": user.email,
+                "role": decoded_token.get("role"),
+                "display_name": user.display_name,
+                "email_verified": user.email_verified,
+                "phone_number": user.phone_number,
+                "photo_url": user.photo_url
+            }
+
         except exceptions.FirebaseError:
             raise HTTPException(status_code=401, detail="Token inválido o expirado")
-
-    @staticmethod
-    def role_required(allowed_roles: list[str]):
-        def decorator(func):
-            @wraps(func)
-            async def wrapper(request: Request, *args, **kwargs):
-                auth_header = request.headers.get("Authorization")
-                if not auth_header:
-                    raise HTTPException(status_code=401, detail="Token no proporcionado")
-
-                try:
-                    token = auth_header.split(" ")[1]
-                    decoded_token = firebase_auth.verify_id_token(token)
-                    user_role = decoded_token.get("role")
-
-                    if user_role not in allowed_roles:
-                        raise HTTPException(
-                            status_code=status.HTTP_403_FORBIDDEN,
-                            detail=f"No tienes permisos. Se requiere uno de estos roles: {allowed_roles}"
-                        )
-
-                    kwargs["current_user"] = decoded_token
-
-                except Exception:
-                    raise HTTPException(status_code=401, detail="Token inválido o expirado")
-
-                return await func(request, *args, **kwargs)
-            return wrapper
-        return decorator
 
     @staticmethod
     def assign_role(uid: str, role: str):
